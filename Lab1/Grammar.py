@@ -1,5 +1,7 @@
 import random
 
+from Lab1.FiniteAutomaton import FiniteAutomaton
+
 
 class Grammar:
 
@@ -29,6 +31,29 @@ class Grammar:
 
         return currentString
 
+    def toFiniteAutomaton(self):
+        E = self.V_t
+        Q = self.V_n
+        q0 = self.S
+        F = set()
+        delta = {}
+
+        for states, productions in self.P.items():
+            for prod in productions:
+                # final state
+                if prod in V_t:
+                    F.add(prod)
+                else:
+                    # intermediate state
+                    var1 = states
+                    var2 = prod[0]
+
+                    if (var1, var2) not in delta:
+                        delta[(var1, var2)] = []
+                    delta[(var1, var2)] = prod[1]
+
+        return FiniteAutomaton(Q, E, delta, q0, F)
+
 
 V_n = 'SBD'
 V_t = 'abcd'
@@ -43,3 +68,8 @@ S = 'S'
 grammar = Grammar(V_n, V_t, S, P)
 for _ in range(1):
     print('result: ' + grammar.generate_strings())
+
+string = grammar.generate_strings()
+print('String: ' + string)
+fa = grammar.toFiniteAutomaton()
+print(fa.stringBelongToLanguage('string'))
