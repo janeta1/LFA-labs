@@ -1,0 +1,76 @@
+# LAB 1: Intro to formal languages. Regular grammars. Finite Automata.
+
+### Course: Formal Languages & Finite Automata
+### Author: Janeta Grigoras
+
+----
+
+## Theory
+A regular grammar is a formal grammar that defines 
+a language using production rules where the right-hand side of
+each rule consists of a singular terminal symbol, or one terminal and
+one non-terminal symbol. Regular grammars can be presented by Finite Automata,
+which are machines with a finite number of steps.  It processes an input string 
+symbol by symbol, transitioning from one state to another based on predefined rules.
+To convert a regular grammar to a finite automaton, we create states for each 
+non-terminal and establish transitions based on the production rules, 
+where each transition corresponds to a terminal symbol.
+
+
+
+## Objectives:
+
+* Understand the components of a formal language, such as the alphabet, vocabulary, and grammar.
+* Create a class that models a regular grammar
+* Convert regular grammar to finite automaton
+* Create a finite automaton class that includes the states, 
+alphabet, transition function, initial state, and accepting states.
+
+
+## Implementation description
+
+* I implemented variant 14:
+    ```
+    VN={S, B, D}, 
+    VT={a, b, c, d}, 
+    P={ 
+        S → aS
+        S → bB
+        B → cB
+        B → d
+        B → aD
+        D → aB
+        D → b
+    }
+    ```
+* Grammar class
+  * This class defines a regular grammar with terminal, non-terminals, start symbol, and 
+  production rules. It contains a method called generate_strings() that generates valid
+  words for the given grammar, by continuously replacing non-terminals with terminals based
+  on the defined production rules until there are no non-terminals left. The class also contains
+  method called toFiniteAutomaton() which converts the regular grammar into a finite automaton.
+
+* FiniteAutomaton class
+  *  The class stores the states, alphabet, transition function, initial state, and accepting 
+  states of the automaton. The stringBelongToLanguage() method checks whether a given input string
+  belongs to the given language by processing the string through its states according to the 
+  transition rules.
+
+
+## Conclusions / Screenshots / Results
+* To test my code I generated 5 strings and checked whether they belong to the language or not. I 
+also created 3 strings that I know don't belong to the language to test the functionality of the 
+stringBelongToLanguage() method:
+<img src="./resultsLab1.png">
+* In conclusion, this lab gave me valuable hands-on experience in working with regular grammars 
+and finite automata. I was able to successfully implement a grammar, generate valid strings, 
+and convert it into a finite automaton. Testing the strings helped me better understand how 
+automata can be used to validate whether a string belongs to a specific language, making the 
+connection between theory and practical application clearer.
+
+## References
+* [Converting Regular Grammar to Finite Automata](https://www.youtube.com/watch?v=frzs_IWiiqQ&ab_channel=SudhakarAtchala)
+* [Formal Languages and Finite
+Automata. Guide for practical lessons](https://else.fcim.utm.md/pluginfile.php/110458/mod_resource/content/0/LFPC_Guide.pdf)
+* [Introduction to Finite Automata](https://www.geeksforgeeks.org/introduction-of-finite-automata/)
+* [Transforming Regular Grammars to Equivalent Finite State Automata](http://www.cs.um.edu.mt/gordon.pace/Research/Software/Relic/Transformations/RG/toFSA.html)

@@ -50,9 +50,6 @@ class Grammar:
                     if symbol in self.V_t:
                         var2 = symbol
                         break
-                '''print(var2)
-                print(var1)
-                print(prod)'''
                 next_state = None
                 if (var1, var2) not in delta:
                     delta[(var1, var2)] = []
@@ -67,22 +64,3 @@ class Grammar:
         F.add('X')
         return FiniteAutomaton(Q, E, delta, q0, F)
 
-
-'''V_n = 'SBD'
-V_t = 'abcd'
-P = {
-    'S': ['aS', 'bB'],
-    'B': ['cB', 'd', 'aD'],
-    'D': ['aB', 'b']
-}
-
-S = 'S'
-
-grammar = Grammar(V_n, V_t, S, P)
-for _ in range(1):
-    print('result: ' + grammar.generate_strings())
-
-string = grammar.generate_strings()
-print('String: ' + string)
-fa = grammar.toFiniteAutomaton()
-print(fa.stringBelongToLanguage('string'))'''
