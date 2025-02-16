@@ -22,9 +22,8 @@ class Grammar:
                 if symbol in self.V_n:
                     replacement = random.choice(self.P[symbol])
                     currentString = currentString.replace(symbol, replacement, 1)
-                    print(currentString)
+                    # print(currentString)
                     all_terminals = False
-
 
             if all_terminals:
                 break
@@ -41,21 +40,35 @@ class Grammar:
         for states, productions in self.P.items():
             for prod in productions:
                 # final state
-                if prod in V_t:
+                if prod in self.V_t:
                     F.add(prod)
-                else:
-                    # intermediate state
-                    var1 = states
-                    var2 = prod[0]
 
-                    if (var1, var2) not in delta:
-                        delta[(var1, var2)] = []
-                    delta[(var1, var2)] = prod[1]
+                # intermediate state
+                var1 = states
+                var2 = prod[0]
+                for symbol in prod:
+                    if symbol in self.V_t:
+                        var2 = symbol
+                        break
+                '''print(var2)
+                print(var1)
+                print(prod)'''
+                next_state = None
+                if (var1, var2) not in delta:
+                    delta[(var1, var2)] = []
+                for symbol in prod:
+                    if symbol in self.V_n:
+                        next_state = symbol
+                        break
+                if next_state is None:
+                    next_state = 'X'
 
+                delta[(var1, var2)].append(next_state)
+        F.add('X')
         return FiniteAutomaton(Q, E, delta, q0, F)
 
 
-V_n = 'SBD'
+'''V_n = 'SBD'
 V_t = 'abcd'
 P = {
     'S': ['aS', 'bB'],
@@ -72,4 +85,4 @@ for _ in range(1):
 string = grammar.generate_strings()
 print('String: ' + string)
 fa = grammar.toFiniteAutomaton()
-print(fa.stringBelongToLanguage('string'))
+print(fa.stringBelongToLanguage('string'))'''
