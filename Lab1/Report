@@ -1,0 +1,158 @@
+# LAB 1: Intro to formal languages. Regular grammars. Finite Automata.
+
+### Course: Formal Languages & Finite Automata
+### Author: Janeta Grigoras
+
+----
+
+## Theory
+A regular grammar is a formal grammar that defines 
+a language using production rules where the right-hand side of
+each rule consists of a singular terminal symbol, or one terminal and
+one non-terminal symbol. Regular grammars can be presented by Finite Automata,
+which are machines with a finite number of steps.  It processes an input string 
+symbol by symbol, transitioning from one state to another based on predefined rules.
+To convert a regular grammar to a finite automaton, we create states for each 
+non-terminal and establish transitions based on the production rules, 
+where each transition corresponds to a terminal symbol.
+
+
+
+## Objectives:
+
+* Understand the components of a formal language, such as the alphabet, vocabulary, and grammar.
+* Create a class that models a regular grammar
+* Convert regular grammar to finite automaton
+* Create a finite automaton class that includes the states, 
+alphabet, transition function, initial state, and accepting states.
+
+
+## Implementation description
+
+* I implemented variant 14:
+    ```
+    VN={S, B, D}, 
+    VT={a, b, c, d}, 
+    P={ 
+        S → aS
+        S → bB
+        B → cB
+        B → d
+        B → aD
+        D → aB
+        D → b
+    }
+    ```
+* Grammar class
+  * This class defines a regular grammar with terminal, non-terminals, start symbol, and 
+  production rules. It contains a method called generate_strings() that generates valid
+  words for the given grammar, by continuously replacing non-terminals with terminals based
+  on the defined production rules until there are no non-terminals left. The class also contains
+  method called toFiniteAutomaton() which converts the regular grammar into a finite automaton.
+  * The generate_strings() method generates strings by starting with the initial symbol self.S and 
+  repeatedly replacing non-terminals with randomly chosen production rules from self.P. It iterates 
+  through the string, replacing the first non-terminal it finds in each loop iteration. This process 
+  continues until the string contains only terminal symbols, at which point the final string is returned. 
+  Since replacements are random, different executions may produce different valid strings based on the grammar.
+  ```    
+    def generate_strings(self):
+        currentString = self.S
+
+        while True:
+            all_terminals = True
+
+            for i in range(len(currentString)):
+                symbol = currentString[i]
+                if symbol in self.V_n:
+                    replacement = random.choice(self.P[symbol])
+                    currentString = currentString.replace(symbol, replacement, 1)
+                    # print(currentString)
+                    all_terminals = False
+
+            if all_terminals:
+                break
+
+        return currentString
+    ```
+  * The toFiniteAutomaton() method converts a regular grammar into a finite automaton by defining 
+  states, input symbols, transitions, the initial state, and final states. It iterates through 
+  the production rules, adding terminal-only productions to the final states and mapping transitions 
+  from non-terminals to their first terminal and next state. If no non-terminal follows, it assigns 
+  a generic final state 'X'. The method then returns a FiniteAutomaton instance with the constructed 
+  components.
+  ```    
+  def toFiniteAutomaton(self):
+        E = self.V_t
+        Q = self.V_n
+        q0 = self.S
+        F = set()
+        delta = {}
+
+        for states, productions in self.P.items():
+            for prod in productions:
+                # final state
+                if prod in self.V_t:
+                    F.add(prod)
+
+                # intermediate state
+                var1 = states
+                var2 = prod[0]
+                for symbol in prod:
+                    if symbol in self.V_t:
+                        var2 = symbol
+                        break
+                next_state = None
+                if (var1, var2) not in delta:
+                    delta[(var1, var2)] = []
+                for symbol in prod:
+                    if symbol in self.V_n:
+                        next_state = symbol
+                        break
+                if next_state is None:
+                    next_state = 'X'
+
+                delta[(var1, var2)].append(next_state)
+        F.add('X')
+        return FiniteAutomaton(Q, E, delta, q0, F)
+  ```
+* FiniteAutomaton class
+  *  The class stores the states, alphabet, transition function, initial state, and accepting 
+  states of the automaton. The stringBelongToLanguage() method checks whether a given input string
+  belongs to the given language by processing the string through its states according to the 
+  transition rules.
+  * The stringBelongToLanguage() method checks whether a given inputString belongs to the language 
+  recognized by the finite automaton. It starts from the initial state q0 and processes each symbol 
+  in the string. If a valid transition exists in delta, it moves to the next state; otherwise, it 
+  returns False. After processing all symbols, it returns True if the final state is in F, indicating 
+  acceptance, and False otherwise.
+  ```    
+  def stringBelongToLanguage(self, inputString):
+        currentState = self.q0
+
+        for symbol in inputString:
+            if (currentState, symbol) in self.delta:
+                currentState = self.delta[(currentState, symbol)][0]
+                #print(currentState)
+            else:
+                return False
+        return currentState in self.F
+  ```
+
+
+## Conclusions / Screenshots / Results
+* To test my code I generated 5 strings and checked whether they belong to the language or not. I 
+also created 3 strings that I know don't belong to the language to test the functionality of the 
+stringBelongToLanguage() method:
+<img src="./resultsLab1.png">
+* In conclusion, this lab gave me valuable hands-on experience in working with regular grammars 
+and finite automata. I was able to successfully implement a grammar, generate valid strings, 
+and convert it into a finite automaton. Testing the strings helped me better understand how 
+automata can be used to validate whether a string belongs to a specific language, making the 
+connection between theory and practical application clearer.
+
+## References
+* [Converting Regular Grammar to Finite Automata](https://www.youtube.com/watch?v=frzs_IWiiqQ&ab_channel=SudhakarAtchala)
+* [Formal Languages and Finite
+Automata. Guide for practical lessons](https://else.fcim.utm.md/pluginfile.php/110458/mod_resource/content/0/LFPC_Guide.pdf)
+* [Introduction to Finite Automata](https://www.geeksforgeeks.org/introduction-of-finite-automata/)
+* [Transforming Regular Grammars to Equivalent Finite State Automata](http://www.cs.um.edu.mt/gordon.pace/Research/Software/Relic/Transformations/RG/toFSA.html)
