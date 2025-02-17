@@ -49,12 +49,94 @@ alphabet, transition function, initial state, and accepting states.
   words for the given grammar, by continuously replacing non-terminals with terminals based
   on the defined production rules until there are no non-terminals left. The class also contains
   method called toFiniteAutomaton() which converts the regular grammar into a finite automaton.
+  * The generate_strings() method generates strings by starting with the initial symbol self.S and 
+  repeatedly replacing non-terminals with randomly chosen production rules from self.P. It iterates 
+  through the string, replacing the first non-terminal it finds in each loop iteration. This process 
+  continues until the string contains only terminal symbols, at which point the final string is returned. 
+  Since replacements are random, different executions may produce different valid strings based on the grammar.
+  ```    
+    def generate_strings(self):
+        currentString = self.S
 
+        while True:
+            all_terminals = True
+
+            for i in range(len(currentString)):
+                symbol = currentString[i]
+                if symbol in self.V_n:
+                    replacement = random.choice(self.P[symbol])
+                    currentString = currentString.replace(symbol, replacement, 1)
+                    # print(currentString)
+                    all_terminals = False
+
+            if all_terminals:
+                break
+
+        return currentString
+    ```
+  * The toFiniteAutomaton() method converts a regular grammar into a finite automaton by defining 
+  states, input symbols, transitions, the initial state, and final states. It iterates through 
+  the production rules, adding terminal-only productions to the final states and mapping transitions 
+  from non-terminals to their first terminal and next state. If no non-terminal follows, it assigns 
+  a generic final state 'X'. The method then returns a FiniteAutomaton instance with the constructed 
+  components.
+  ```    
+  def toFiniteAutomaton(self):
+        E = self.V_t
+        Q = self.V_n
+        q0 = self.S
+        F = set()
+        delta = {}
+
+        for states, productions in self.P.items():
+            for prod in productions:
+                # final state
+                if prod in self.V_t:
+                    F.add(prod)
+
+                # intermediate state
+                var1 = states
+                var2 = prod[0]
+                for symbol in prod:
+                    if symbol in self.V_t:
+                        var2 = symbol
+                        break
+                next_state = None
+                if (var1, var2) not in delta:
+                    delta[(var1, var2)] = []
+                for symbol in prod:
+                    if symbol in self.V_n:
+                        next_state = symbol
+                        break
+                if next_state is None:
+                    next_state = 'X'
+
+                delta[(var1, var2)].append(next_state)
+        F.add('X')
+        return FiniteAutomaton(Q, E, delta, q0, F)
+  ```
 * FiniteAutomaton class
   *  The class stores the states, alphabet, transition function, initial state, and accepting 
   states of the automaton. The stringBelongToLanguage() method checks whether a given input string
   belongs to the given language by processing the string through its states according to the 
   transition rules.
+  * The stringBelongToLanguage() method checks whether a given inputString belongs to the language 
+  recognized by the finite automaton. It starts from the initial state q0 and processes each symbol 
+  in the string. If a valid transition exists in delta, it moves to the next state; otherwise, it 
+  returns False. After processing all symbols, it returns True if the final state is in F, indicating 
+  acceptance, and False otherwise.
+  ```    
+  def stringBelongToLanguage(self, inputString):
+        currentState = self.q0
+
+        for symbol in inputString:
+            if (currentState, symbol) in self.delta:
+                currentState = self.delta[(currentState, symbol)][0]
+                #print(currentState)
+            else:
+                return False
+        return currentState in self.F
+  ```
 
 
 ## Conclusions / Screenshots / Results
