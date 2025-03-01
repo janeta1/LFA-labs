@@ -1,4 +1,6 @@
-from Lab1.Grammar import Grammar
+from Lab2.Grammar import Grammar
+from Lab2.FiniteAutomaton import FiniteAutomaton
+
 
 V_n = ['S', 'B', 'D']
 V_t = ['a', 'b', 'c', 'd']
@@ -24,4 +26,25 @@ print('\nChecking words that dont belong to the grammar to see if the function w
 new_words = ['bacccd', 'b', 'abababc']
 for i in range(len(new_words)):
     print(new_words[i] + ': ' + str(fa.stringBelongToLanguage(new_words[i])))
+
+print(grammar.chomsky_type())
+
+
+Q = ['q0', 'q1', 'q2']
+E = ['a', 'b', 'c']
+F = ['q2']
+delta = {
+    ('q0', 'a'): ['q0', 'q2'],
+    ('q0', 'b'): ['q1'],
+    ('q1', 'c'): ['q1'],
+    ('q1', 'c'): ['q2'],
+    ('q2', 'a'): ['q0'],
+    ('q1', 'a'): ['q1']
+}
+
+fa = FiniteAutomaton(Q, E, delta, 'q0', F)
+reg = fa.to_regular_grammar()
+print(reg.P)
+print(fa.is_deterministic())
+
 
