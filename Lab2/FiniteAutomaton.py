@@ -23,7 +23,7 @@ class FiniteAutomaton:
         return currentState in self.F
 
     def to_regular_grammar(self):
-        V_n = list(self.delta.keys())
+        V_n = self.Q
         V_t = self.E
         S = self.q0
         delta = {}
@@ -35,11 +35,6 @@ class FiniteAutomaton:
                 if next_state in self.F:
                     delta[state].append(terminal)
                 delta[state].append(terminal + next_state)
-
-        for final_state in self.F:
-            if final_state not in delta:
-                delta[final_state] = []
-            delta[final_state].append('')
 
         return Grammar(V_n, V_t, S, delta)
 
@@ -73,16 +68,16 @@ class FiniteAutomaton:
                 new_state = set()
 
                 for nfa_state in current_dfa_state:
-                    print(symbol)
-                    print(nfa_state)
+                    # print(symbol)
+                    # print(nfa_state)
                     if(nfa_state, symbol) in self.delta:
                         new_state.update(self.delta[(nfa_state, symbol)])
-                print(new_state)
+                # print(new_state)
                 if new_state:
                     dfa_delta[(tuple(current_dfa_state), symbol)] = new_state
 
                     if new_state not in dfa_Q:
                         dfa_Q.append(new_state)
                         states_queue.append(new_state)
-
+        # print(dfa_delta)
         return FiniteAutomaton(dfa_Q, dfa_E, dfa_delta, dfa_q0, dfa_F)

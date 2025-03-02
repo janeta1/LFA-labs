@@ -65,16 +65,14 @@ class Grammar:
         return FiniteAutomaton(Q, E, delta, q0, F)
 
     def chomsky_type(self):
-        type = -1
         if self.type3():
-            type = 3
+            return 3
         elif self.type2():
-            type = 2
+            return 2
         elif self.type1():
-            type = 1
+            return 1
         else:
-            type = 0
-        return type
+            return 0
 
     def type3(self):
         for non_terminal in self.P.keys():
