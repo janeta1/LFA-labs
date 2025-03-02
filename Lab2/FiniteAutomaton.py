@@ -8,7 +8,7 @@ class FiniteAutomaton:
         self.delta = delta
         self.q0 = q0
         self.F = F
-        print(delta)
+        # print(delta)
         # print(F)
 
     def stringBelongToLanguage(self, inputString):
@@ -39,7 +39,7 @@ class FiniteAutomaton:
         for final_state in self.F:
             if final_state not in delta:
                 delta[final_state] = []
-            delta[final_state].append('eps')
+            delta[final_state].append('')
 
         return Grammar(V_n, V_t, S, delta)
 
@@ -48,13 +48,41 @@ class FiniteAutomaton:
         for (state, terminal), next_state in self.delta.items():
             if (state, terminal) not in repetitions:
                 repetitions[(state, terminal)] = []
-            for st in next_state:
+            for _ in next_state:
                 repetitions[(state, terminal)].append('+')
         for (state, terminal), value_list in repetitions.items():
-            if value_list.count('+') > 1:
+            if len(value_list) > 1:
                 return False
         return True
 
     def ndfa_to_dfa(self):
+        dfa_E = self.E
+        dfa_delta = {}
+        dfa_q0 = {self.q0}
+        dfa_F = set()
+        dfa_Q = [dfa_q0]
+        states_queue = [dfa_q0]
 
-        return
+        while states_queue:
+            current_dfa_state = states_queue.pop(0)
+
+            if any(state in self.F for state in current_dfa_state):
+                dfa_F.add(tuple(current_dfa_state))
+
+            for symbol in dfa_E:
+                new_state = set()
+
+                for nfa_state in current_dfa_state:
+                    print(symbol)
+                    print(nfa_state)
+                    if(nfa_state, symbol) in self.delta:
+                        new_state.update(self.delta[(nfa_state, symbol)])
+                print(new_state)
+                if new_state:
+                    dfa_delta[(tuple(current_dfa_state), symbol)] = new_state
+
+                    if new_state not in dfa_Q:
+                        dfa_Q.append(new_state)
+                        states_queue.append(new_state)
+
+        return FiniteAutomaton(dfa_Q, dfa_E, dfa_delta, dfa_q0, dfa_F)

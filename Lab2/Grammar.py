@@ -83,7 +83,7 @@ class Grammar:
             for rule in right_side:
                 if len(left_side) > 1 or len(rule) > 2:
                     return False
-                elif len(rule) == 1 and (rule[0] in self.V_t):
+                elif (len(rule) == 1 and rule[0] in self.V_t) or len(rule) == 0:
                     continue
                 else:
                     if rule[0] in self.V_n and rule[1] in self.V_t:
