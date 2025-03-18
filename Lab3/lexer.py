@@ -34,6 +34,14 @@ def lexer(expression):
     return tokens
 
 
-
-
-
+print("1. Expression: 5*cos(8) + sqrt(9) - 19.4")
+print("Result: ")
+print(lexer("5*cos(8) + sqrt(9) - 19.4"))
+print("                                                                                   ...")
+print("2. Expression: (1+2)/3 -3^6+4*sin(sqrt(3))")
+print("Result: ")
+print(lexer("(1+2)/3 -3^6+4*sin(sqrt(3))"))
+print("                                                                                   ...")
+print("3. Expression: 1.19 / sqrt(9^2)")
+print("Result: ")
+print(lexer("1.19 / sqrt(9^2)"))
