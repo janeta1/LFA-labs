@@ -316,6 +316,9 @@ def ndfa_to_dfa(self):
      - dfa_q0: The start state of the DFA.
      - dfa_F: The set of final states of the DFA.
 ## Conclusions / Screenshots / Results
+* Visual representation for task 4 (converting NDFA to DFA)
+* <img src="vs1.JPG">
+* <img src="vs2.JPG">
 * To test my functions, I created a main file.
   * For task 1, I used the grammar from the last lab and then determined its Chomsky type with the function chomsky_type(). The result correctly identified the grammar as of type 3 (Context-Free Grammar).
   * <img src="./task1.png">
