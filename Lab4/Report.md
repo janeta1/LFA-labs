@@ -138,8 +138,11 @@ So, I decided to take a different route: using tokens. I opted to use a tokeniza
 
 ## Conclusions / Screenshots / Results
 1. To test my program I used the regular expressions from variant 2:
+
    ![img.png](img.png)
+
    These were my results:
+
    ![img_1.png](img_1.png)
    ![img_2.png](img_2.png)
 2. In conclusion, this lab has significantly improved my understanding of regular expressions and how they are processed. By implementing the solution to dynamically generate valid strings based on regular expressions, I was able to dive deeper into the structure and behavior of regex patterns. The process of tokenizing and handling different parts of the expression, such as characters, groups, quantifiers, and alternations, helped me understand the intricacies of regex syntax and its flexibility. This experience will be valuable in the future, especially when working on text processing tasks like validation, extraction, and data manipulation, where regex is an essential tool. Additionally, the ability to dynamically generate valid strings will be helpful in situations where predefined patterns or hardcoded solutions are not viable, allowing for greater adaptability and efficiency in my future programming tasks.
