@@ -80,9 +80,9 @@ class Cnf:
             for symbol in current:
                 for production in grammar.P[symbol]:
                     for char in production:
-                        if char in grammar.V_n:
+                        if char in grammar.V_n and char not in accessible:
                             accessible.add(char)
-                            changed = False
+                            changed = True
         new_P = {s: p[:] for s, p in grammar.P.items() if s in accessible}
         grammar.P = new_P
         grammar.V_n = [v for v in grammar.V_n if v in accessible]
