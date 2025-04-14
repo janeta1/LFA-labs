@@ -1,11 +1,11 @@
 from Lab1.Grammar import Grammar
-from Lab5.cnf import Cnf
+from ChomskyNormalForm.cnf import Cnf
 
 V_n = ['S', 'A', 'B', 'C', 'D']
 V_t = ['a', 'b']
 P = {
     "S": ["aB", "A"],
-    "A": ["bAa", "AS", "a"],
+    "A": ["bAa", "aS", "a"],
     "B": ["AbB", "BS", "a", "ε"],
     "C": ["BA"],
     "D": ["a"]

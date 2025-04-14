@@ -212,8 +212,9 @@ Converting a grammar to CNF involves several transformation steps: eliminating Î
 ## Conclusions / Screenshots / Results
 * To test my code I generated I used the grammar from variant 14:
 
-![img.png](img.png)
 ![img_1.png](img_1.png)
+
+![img.png](img.png)
 * In conclusion, this laboratory work taught me how to eliminate epsilon productions, remove renaming rules, and handle non-productive and inaccessible symbols in a grammar, all in order to bring it into Chomsky Normal Form. These steps are essential for converting a grammar into a more standardized and efficient form for use in parsing and language analysis. By applying these concepts, I gained a deeper understanding of formal languages and the importance of simplifying grammars to make them more practical for computational tasks.
 
 * This work will be valuable in the future as it strengthens my ability to manipulate and optimize grammars, which will be useful in compiler design, language processing, and other areas of formal language theory. Understanding these transformations also provides a foundation for working with more complex language models and algorithms, making me better prepared for future tasks that require working with formal grammars and automata.
