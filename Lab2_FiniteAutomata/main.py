@@ -1,5 +1,5 @@
-from Lab2.Grammar import Grammar
-from Lab2.FiniteAutomaton import FiniteAutomaton
+from Lab2_FiniteAutomata.Grammar import Grammar
+from Lab2_FiniteAutomata.FiniteAutomaton import FiniteAutomaton
 
 
 print("------------------Task 1------------------")

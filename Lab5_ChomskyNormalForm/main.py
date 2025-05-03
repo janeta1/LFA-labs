@@ -1,5 +1,5 @@
-from Lab1.Grammar import Grammar
-from ChomskyNormalForm.cnf import Cnf
+from Lab1_RegularGrammars.Grammar import Grammar
+from Lab5_ChomskyNormalForm.cnf import Cnf
 
 V_n = ['S', 'A', 'B', 'C', 'D']
 V_t = ['a', 'b']

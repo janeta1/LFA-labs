@@ -1,6 +1,6 @@
 import random
 
-from Lab1.FiniteAutomaton import FiniteAutomaton
+from Lab1_RegularGrammars.FiniteAutomaton import FiniteAutomaton
 
 
 class Grammar:

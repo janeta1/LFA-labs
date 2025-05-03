@@ -1,4 +1,4 @@
-from Lab4.lexer import *
+from Lab4_RegularExpressions.lexer import *
 
 ex1 = 'u?N{2}(O|P){3}Q*R+'
 print("Example 1:")

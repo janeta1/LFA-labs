@@ -1,4 +1,4 @@
-from Lab2.Grammar import Grammar
+from Lab2_FiniteAutomata.Grammar import Grammar
 
 
 class FiniteAutomaton:

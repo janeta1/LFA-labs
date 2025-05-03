@@ -1,4 +1,4 @@
-from Lab1.Grammar import Grammar
+from Lab1_RegularGrammars.Grammar import Grammar
 
 V_n = ['S', 'B', 'D']
 V_t = ['a', 'b', 'c', 'd']
