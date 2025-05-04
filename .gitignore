@@ -1,0 +1,19 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# IDE files for JetBrains (IntelliJ IDEA, PyCharm, etc.)
+.idea/
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
